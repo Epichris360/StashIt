@@ -1,0 +1,100 @@
+<script type="text/javascript" >
+	
+	$(function(){
+		$("#signupForm").on('submit',function(e){
+			/* Gets the data from the inputs and checks to see if the pass and passconfirm match
+			else it sends an error
+			if the passes match it sends the data to the backend using an ajax request
+			where the user is created  and loaded into the session afterwards the page is reloaded
+			*/
+			const pass        = $("#password1").val()
+			const passconfirm = $("#password2").val()
+			const username    = $("#username2").val()
+			const email		  = $("#email2").val()
+			const role 	      = $("#role").val()
+
+			if(pass != passconfirm){
+				e.preventDefault()
+				$("#errorSignup").text('The Passwords dont match please try again!')
+				$("#signup").removeClass('hidden')
+				return
+			}else{
+				e.preventDefault()
+				$("#submitSignup").addClass('hidden')
+				$("#loadingSignup").removeClass('hidden')
+				$.ajax({
+					url: '/user/signup',
+					data: {
+						format: 'json',
+						pass: pass,
+						username: username,
+						email: email,
+						role: role
+					},
+					error: function(err) {
+						$("#errorSignup").text(err.msg)
+						$("#signup").removeClass('hidden')
+						$("#submitSignup").removeClass('hidden')
+						$("#loadingSignup").addClass('hidden')
+					},
+					dataType: 'json',
+					success: function(data) {
+						window.location.href = window.location.href
+					},
+					type: 'POST'
+				})
+			}
+
+		})
+
+		$("#signinForm").on('submit', function(e){
+			const password = $("#password").val()
+			const username = $("#username").val()
+
+			if(password == "" || username == ""){
+				e.preventDefault()
+				$("#signin").removeClass('hidden')
+				$("#errorSignin").text("One of the fields is empty!!!")
+			}else{
+				$("#submitSignin").addClass('hidden')
+				$("#loadingSignin").removeClass('hidden')
+				e.preventDefault()
+				$.ajax({
+					url: '/user/signin',
+					data: {
+						format: 'json',
+						password: password,
+						username: username
+					},
+					error: function(err) {
+						$("#errorSignin").text(err.msg)
+						console.log(err.msg)
+						$("#signin").removeClass('hidden') 
+						$("#submitSignin").removeClass('hidden')
+						$("#loadingSignin").addClass('hidden')
+					},
+					dataType: 'json',
+					success: function(data) {
+						window.location.href = window.location.href
+					},
+					type: 'POST'
+				})
+			}
+		})
+
+		/*
+			<h5 class="hidden" id="loadingSignup" >Loading....</h5>
+			<h5 class="hidden" id="loadingSignin" >Loading....</h5>
+			submitSignin
+			submitSignup
+		*/
+
+		$(".closeAlert").on('click',function(e){
+			e.preventDefault()
+			$("#errorSignup").text('')
+			$("#signup").addClass('hidden')
+			$("#signin").addClass('hidden')
+			$("#errorSignin").text("")
+		})
+	})
+</script>

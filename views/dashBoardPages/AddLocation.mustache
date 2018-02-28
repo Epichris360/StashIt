@@ -1,0 +1,459 @@
+{{>headDash}}
+
+    <!-- Content
+	================================================== -->
+	<div class="dashboard-content">
+
+		<!-- Titlebar -->
+		<div id="titlebar">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Create Listing</h2>
+					<!-- Breadcrumbs
+					<nav id="breadcrumbs">
+						<ul>
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Dashboard</a></li>
+							<li>Add Listing</li>
+						</ul>
+					</nav>  -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+                <form action="/dashboard/add-location" method="POST" id="addListingForm" >
+				<div id="add-listing"  >
+
+					<!-- Section -->
+					<div class="add-listing-section">
+
+						<!-- Headline -->
+						<div class="add-listing-headline">
+							<h3><i class="sl sl-icon-doc"></i> Basic Informations</h3>
+						</div>
+
+						<!-- Title -->
+						<div class="row with-forms">
+							<div class="col-md-12">
+								<h5>Listing Title <i class="tip" data-tip-content="Name of your business"></i></h5>
+								<input class="search-field" name="listingTitle" type="text" value="" required />
+							</div>
+						</div>
+
+						<!-- Row -->
+						<div class="row with-forms">
+
+							<!-- Status -->
+							<div class="col-md-6">
+								<h5>Category</h5>
+								<select class="chosen-select-no-single" name="category" >
+									{{#listCats}}
+                                    <option value="{{name}}">{{name}}</option>
+                                    {{/listCats}}
+								</select>
+							</div>
+
+							<div class="col-md-6">
+								<h5>Capacity:</h5>
+								<input type="num" name="capacity" placeholder="How many Bags can you store?" required >
+							</div>
+
+
+						</div>
+						<!-- Row / End -->
+
+					</div>
+					<!-- Section / End -->
+
+					<!-- Section -->
+					<div class="add-listing-section margin-top-45">
+
+						<!-- Headline -->
+						<div class="add-listing-headline">
+							<h3><i class="sl sl-icon-location"></i> Location</h3>
+						</div>
+
+						<div class="submit-section">
+
+							<!-- Row -->
+							<div class="row with-forms">
+
+								<!-- City -->
+								<div class="col-md-6">
+									<h5>City</h5>
+									<select class="chosen-select-no-single" name="city" >
+                                        {{#cities}}
+										<option value="{{name}}">{{name}}</option>
+										{{/cities}}
+									</select>
+								</div>
+
+								<!-- Address -->
+								<div class="col-md-6">
+									<h5>Address</h5>
+									<input type="text" name="address" placeholder="e.g. 964 School Street" required >
+								</div>
+
+								<!-- Zip-Code -->
+								<div class="col-md-6">
+									<h5>Zip-Code</h5>
+									<input type="text" name="zipcode" placeholder="90210" required >
+								</div>
+
+							</div>
+							<!-- Row / End -->
+
+						</div>
+					</div>
+					<!-- Section / End -->
+
+
+					<!-- Section -->
+					<div class="add-listing-section margin-top-45">
+
+						<!-- Headline -->
+						<div class="add-listing-headline">
+							<h3><i class="sl sl-icon-picture"></i> Gallery</h3>
+						</div>
+
+						<input type="hidden" id="imagesInput" name="images">
+						
+						<button id="btn-file-select" class="button" >
+							Upload Pictures!
+						</button>
+						<h2 id="done" class="hidden" >Done...</h2>
+						
+						<img src="" id="imgShow" height="50%" width="50%" >
+
+					</div>
+					<!-- Section / End -->
+
+
+					<!-- Section -->
+					<div class="add-listing-section margin-top-45">
+
+						<!-- Headline -->
+						<div class="add-listing-headline">
+							<h3><i class="sl sl-icon-docs"></i> Details</h3>
+						</div>
+
+						<!-- Description -->
+						<div class="form">
+							<h5>Description</h5>
+							<textarea class="WYSIWYG" name="description" cols="40" rows="3" id="summary" spellcheck="true" required ></textarea>
+						</div>
+
+						<!-- Row -->
+						<div class="row with-forms">
+
+							<!-- Phone -->
+							<div class="col-md-4">
+								<h5>Phone Number</h5>
+								<input type="number" name="phoneNum" required >
+							</div>
+
+							<!-- Website -->
+							<div class="col-md-4">
+								<h5>Website <span>(optional)</span></h5>
+								<input type="text" name="website" >
+							</div>
+
+							<!-- Email Address -->
+							<div class="col-md-4">
+								<h5>E-mail <span>(optional)</span></h5>
+								<input type="text" name="email" >
+							</div>
+
+						</div>
+						<!-- Row / End -->
+
+					</div>
+					<!-- Section / End -->
+
+
+					<!-- Section -->
+					<div class="add-listing-section margin-top-45">
+						
+						<!-- Headline -->
+						<div class="add-listing-headline">
+							<h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
+							<!-- Switcher -->
+							<label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
+						</div>
+						
+						<!-- Switcher ON-OFF Content -->
+						<div class="switcher-content">
+
+							
+							<div class="row" > 
+								<div class="col-md-2" >Options:</div>
+								<div class="col-md-5" >
+									<h2 class="text-center" >Opening Time</h2>
+								</div>
+								<div class="col-md-5" >
+									<h2 class="text-center" >Closing Time</h2>
+								</div>
+							</div>
+							<!-- Day -->
+							<div class="row opening-day">
+								
+								<div class="col-md-2"><h5>Monday</h5></div>
+								<input type="hidden" value="monday" name="day[]" >
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" Hour name="openTime[]" >
+										<option label="Opening Time"></option>
+										<option>Closed</option>
+										<option>1 AM</option>
+										<option>2 AM</option>
+										<option>3 AM</option>
+										<option>4 AM</option>
+										<option>5 AM</option>
+										<option>6 AM</option>
+										<option>7 AM</option>
+										<option>8 AM</option>
+										<option>9 AM</option>
+										<option>10 AM</option>
+										<option>11 AM</option>
+										<option>12 AM</option>	
+										<option>1 PM</option>
+										<option>2 PM</option>
+										<option>3 PM</option>
+										<option>4 PM</option>
+										<option>5 PM</option>
+										<option>6 PM</option>
+										<option>7 PM</option>
+										<option>8 PM</option>
+										<option>9 PM</option>
+										<option>10 PM</option>
+										<option>11 PM</option>
+										<option>12 PM</option>
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<option label="Closing Time"></option>
+										<option>Closed</option>
+										<option>1 AM</option>
+										<option>2 AM</option>
+										<option>3 AM</option>
+										<option>4 AM</option>
+										<option>5 AM</option>
+										<option>6 AM</option>
+										<option>7 AM</option>
+										<option>8 AM</option>
+										<option>9 AM</option>
+										<option>10 AM</option>
+										<option>11 AM</option>
+										<option>12 AM</option>	
+										<option>1 PM</option>
+										<option>2 PM</option>
+										<option>3 PM</option>
+										<option>4 PM</option>
+										<option>5 PM</option>
+										<option>6 PM</option>
+										<option>7 PM</option>
+										<option>8 PM</option>
+										<option>9 PM</option>
+										<option>10 PM</option>
+										<option>11 PM</option>
+										<option>12 PM</option>
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="tuesday" name="day[]" >
+								<div class="col-md-2"><h5>Tuesday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="wednesday" name="day[]" >
+								<div class="col-md-2"><h5>Wednesday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="thursday" name="day[]" >
+								<div class="col-md-2"><h5>Thursday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="friday" name="day[]" >
+								<div class="col-md-2"><h5>Friday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="saturday" name="day[]" >
+								<div class="col-md-2"><h5>Saturday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+							<!-- Day -->
+							<div class="row opening-day js-demo-hours">
+								<input type="hidden" value="sunday" name="day[]" >
+								<div class="col-md-2"><h5>Sunday</h5></div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Opening Time" name="openTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+								<div class="col-md-5">
+									<select class="chosen-select" data-placeholder="Closing Time" name="closeTime[]" >
+										<!-- Hours added via JS (this is only for demo purpose) -->
+									</select>
+								</div>
+							</div>
+							<!-- Day / End -->
+
+						</div>
+						<!-- Switcher ON-OFF Content / End -->
+
+					</div>
+					<!-- Section / End -->
+
+					<input type="hidden" name="imgLink" id="imgLink" value="[]" >
+
+					<a href="#" class="button preview">Preview <i class="fa fa-arrow-circle-right"></i></a>
+                    <br />
+                    <button class="button pull-right" id="create1" >Create!</button>
+                </div>
+				</form>
+			</div>
+
+			<!-- Copyrights -->
+			<div class="col-md-12">
+				<div class="copyrights">© 2017 Listeo. All Rights Reserved.</div>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- Content / End -->
+
+    {{>scriptsDash}}
+	<!-- For file uploading. Remove if file upload not necessry -->
+	<script type="text/javascript" src="/js/dropzone.js"></script> 
+	<!-- Turbo CDN. Better to use CDN than to store locally. -->
+	<script type="text/javascript" src="https://cdn.turbo360-dev.com/dist/turbo.min.js"></script>
+	<!-- sweet alert -->
+  	<script type="text/javascript" 
+                src="https://unpkg.com/sweetalert2@7.0.9/dist/sweetalert2.all.js" ></script> 
+
+	<script type="text/javascript" >
+		$(function(){
+			$("#loading").hide()
+			$("#finished").hide()
+			var currentFiles = []
+			var turbo = Turbo({site_id: '5a565a9ab298bd001493c04a'})
+			//$("#loading").show()
+			//$(".uploader-class").hide()
+			$('#btn-file-select').click(function(event){
+				event.preventDefault()
+				turbo.uploadFile(function(err, data){
+					if (err){
+						swal(
+							'Oops...',
+							err.message,
+							'error'
+						)
+						//$("#loading-class").hide()
+						//$(".uploader-class").show()
+						return
+					}
+
+					
+					// #done #imgShow btn-file-select
+					$("#btn-file-select").addClass('hidden')
+					
+					$("#imagesInput").val(data.result.url)
+					$("#imgShow").attr('src', data.result.url)
+					$("#done").removeClass('hidden')
+					swal(
+						'Awesome!',
+						'Image(s) were Uploaded!!!!',
+						'success'
+					)
+
+					$(".upload-pic").hide()
+					$("#loading-class").hide()
+					$("#finished").show()
+					//$(".uploader-class").show()
+					return
+				})
+			})
+		})
+		$(document).ready(function() {
+			$(window).keydown(function(event){
+				if(event.keyCode == 13) {
+				event.preventDefault()
+				return false;
+				}
+			})
+		})
+
+	</script>
+
+
+    </body> 
+</html>

@@ -1,0 +1,479 @@
+{{>head}}
+    <div id="wrapper">
+
+        <!-- Slider ================================================== -->
+        <header class="header header-inverse bg-fixed" style="background-image: url( {{img}} )" data-overlay="8">
+            <div class="container text-center">
+
+                <div class="row">
+                    <div class="col-12 col-lg-8 offset-lg-2">
+
+                        <h1 style="color: white; font-size: 60px;" class="stroke" ><strong>{{location.name}}<strong></h1>
+                        <h1 class="fs-20 opacity-70 stroke" style="color: white; font-size: 60px;" >{{location.city}}</h1>
+
+                    </div>
+                </div>
+        
+            </div>
+        </header>
+
+        <!-- Content
+        ================================================== -->
+        <div class="container">
+            <div class="row sticky-wrapper">
+                <div class="col-lg-8 col-md-8 padding-right-30">
+
+                    <!-- Titlebar -->
+                    <div id="titlebar" class="listing-titlebar">
+                        <div class="listing-titlebar-title">
+                            <h2>{{location.name}} <span class="listing-tag">{{location.category}}</span></h2>
+                            <span>
+                                <a href="#listing-location" class="listing-address">
+                                    <i class="fa fa-map-marker"></i>
+                                    {{location.address}}
+                                </a>
+                            </span>
+                            <div class="star-rating" data-rating="5">
+                                <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing Nav -->
+                    <div id="listing-nav" class="listing-nav-container">
+                        <ul class="listing-nav">
+                            <li><a href="#listing-overview" class="active">Overview</a></li>
+                            <li><a href="#listing-pricing-list">Pricing</a></li>
+                            <li><a href="#listing-location">Location</a></li>
+                            <li><a href="#listing-reviews">Reviews</a></li>
+                            <li><a href="#add-review">Add Review</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Overview -->
+                    <div id="listing-overview" class="listing-section">
+
+                        <!-- Description -->
+
+                        {{#description}}
+                            <p>{{.}}</p>
+                        {{/description}}
+
+                        
+                    </div>
+
+
+                    <!-- Food Menu -->
+                    <div id="listing-pricing-list" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-70 margin-bottom-30">Pricing</h3>
+
+                        <div class="show-more">
+                            <div class="pricing-list-container">
+                                
+                                <!-- Food List -->
+                                <h4>Costs!</h4>
+                                <ul>
+                                    <li>
+                                        <h5>24 Hours</h5>
+                                        <p>Per Bag</p>
+                                        <span>$6</span>
+                                    </li>
+                                    <li>
+                                        <h5>Extra 24 Hours</h5>
+                                        <p>Per Bag</p>
+                                        <span>$5</span>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- Food Menu / End -->
+
+                
+                    <!-- Location -->
+                    <div id="listing-location" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-60 margin-bottom-30">Location</h3>
+
+                        <div id="singleListingMap-container">
+                            <div id="singleListingMap" data-latitude="40.70437865245596" data-longitude="-73.98674011230469" data-map-icon="im im-icon-Hamburger"></div>
+                            <a href="#" id="streetView">Street View</a>
+                        </div>
+                    </div>
+                        
+                    <!-- Reviews -->
+                    <div id="listing-reviews" class="listing-section">
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(1)</span></h3>
+
+                        <div class="clearfix"></div>
+
+                        <!-- Reviews -->
+                        <section class="comments listing-reviews">
+
+                            <ul>
+
+                                <li>
+                                    <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
+                                    <div class="comment-content"><div class="arrow-comment"></div>
+                                        <div class="comment-by">John Doe<span class="date">May 2017</span>
+                                            <div class="star-rating" data-rating="5"></div>
+                                        </div>
+                                        <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
+                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </section>
+
+                        <!-- Pagination -->
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Pagination -->
+                                <div class="pagination-container margin-top-30">
+                                    <nav class="pagination">
+                                        <ul>
+                                            <li><a href="#" class="current-page">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <!-- Pagination / End -->
+                    </div>
+
+
+                    <!-- Add Review Box -->
+                    <div id="add-review" class="add-review-box">
+
+                        <!-- Add Review -->
+                        <h3 class="listing-desc-headline margin-bottom-20">Add Review</h3>
+                        
+                        <span class="leave-rating-title">Your rating for this listing</span>
+                        
+                        <!-- Rating / Upload Button -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Leave Rating -->
+                                <div class="clearfix"></div>
+                                <div class="leave-rating margin-bottom-30">
+                                    <input type="radio" name="rating" id="rating-1" value="1"/>
+                                    <label for="rating-1" class="fa fa-star"></label>
+                                    <input type="radio" name="rating" id="rating-2" value="2"/>
+                                    <label for="rating-2" class="fa fa-star"></label>
+                                    <input type="radio" name="rating" id="rating-3" value="3"/>
+                                    <label for="rating-3" class="fa fa-star"></label>
+                                    <input type="radio" name="rating" id="rating-4" value="4"/>
+                                    <label for="rating-4" class="fa fa-star"></label>
+                                    <input type="radio" name="rating" id="rating-5" value="5"/>
+                                    <label for="rating-5" class="fa fa-star"></label>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- Uplaod Photos -->
+                                <div class="add-review-photos margin-bottom-30">
+                                    <div class="photoUpload">
+                                        <span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
+                                        <input type="file" class="upload" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Review Comment -->
+                        <form id="add-comment" class="add-comment">
+                            <fieldset>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Name:</label>
+                                        <input type="text" value=""/>
+                                    </div>
+                                        
+                                    <div class="col-md-6">
+                                        <label>Email:</label>
+                                        <input type="text" value=""/>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label>Review:</label>
+                                    <textarea cols="40" rows="3"></textarea>
+                                </div>
+
+                            </fieldset>
+
+                            <button class="button">Submit Review</button>
+                            <div class="clearfix"></div>
+                        </form>
+
+                    </div>
+                    <!-- Add Review Box / End -->
+
+
+                </div>
+
+
+                <!-- Sidebar
+                ================================================== -->
+                <div class="col-lg-4 col-md-4 margin-top-75 sticky">
+
+                        
+                    <!-- Verified Badge -->
+                    <div class="verified-badge with-tip" data-tip-content="Listing has been verified and belongs the business owner or manager.">
+                        <i class="sl sl-icon-check"></i> Verified Listing
+                    </div>
+
+                    <!-- Book Now -->
+                    <div class="boxed-widget booking-widget margin-top-35" id="queryDates"  >
+                        <h3><i class="fa fa-calendar-check-o "></i>Stash Your Bags!</h3>
+                        <div class="row with-forms  margin-top-0">
+
+                            <div class="notification error hidden" id="stashDiv" >
+                                <p><span>Error!</span>
+                                    <span id="stashError"> </spam>
+                                </p>
+                                <button class="button" type="button" id="stashClose">X</button>
+                            </div>
+
+                            <!-- flatpickr -->
+                            <div class="col-lg-6 col-md-12"> 
+                                <span>Start Date?</span>
+                                <input type="text" class="booking-date" name="startDate" data-lang="en" 
+                                    data-large-mode="true" data-large-default="true" id="startDate"
+                                >
+                            </div>
+
+                            <div class="col-lg-6 col-md-12"> 
+                                <span>End Date?</span>
+                                <input type="text" class="booking-date" name="endDate" data-lang="en" 
+                                    data-large-mode="true" data-large-default="true" id="endDate"
+                                >
+                            </div>
+
+                            <!-- qtys of bags -->
+                            <div class="col-lg-12 col-md-12">
+                                <span>How Many Bags?</span>
+                                <input type="number" name="qtyBags" id="qtyBags" value="1" >
+                            </div>
+                            <input type="hidden" name="location_id" value="{{location.id}}" id="location_id" >
+                        </div>
+                        
+                        <!-- progress button animation handled via custom.js -->
+                        <button class="button book-now fullwidth margin-top-5" id="avil" >Check for Availability</button>
+                    </div>
+                    <!-- Book Now / End -->
+                    <!-- Loading -->
+                    <div class="boxed-widget booking-widget margin-top-35 hidden" id="loading" >
+                        <h3><i class="fa fa-calendar-check-o "></i>Stash Your Bags!</h3>
+                        <div class="row with-forms  margin-top-0">
+                            Checking....
+                        </div>
+                    </div>
+                    <!-- End Loading -->
+                    <!-- Stripe -->
+                    <div class="boxed-widget booking-widget margin-top-35 hidden" id="stripePay"  >
+                        <h3><i class="fa fa-calendar-check-o "></i>Stash Your Bags!</h3>
+                        <div class="row with-forms  margin-top-0">
+                            <form action="/location/payment" method="POST" id="payment-form" >
+                                <label for="card-element">
+                                    Credit or debit card
+                                </label>
+                                <h1>Total: $<span id="totalAmount"></span></h1>
+                                <div id="card-element">
+                                    <!-- a Stripe Element will be inserted here. -->
+                                </div>
+                                <input type="hidden" name="startDate"   id="formStartDate" >
+                                <input type="hidden" name="endDate"     id="formEndDate"   >
+                                <input type="hidden" name="capacity"    id="formCapacity"  >
+                                <input type="hidden" name="qtyBags"     id="formQtyBags"   >
+                                <input type="hidden" name="location_id" id="locationID"    >
+                                <!-- Used to display form errors -->
+                                <div id="card-errors" role="alert"></div>
+                                <br/><br/>
+                                {{#vertexSession.user.loggedIn}}
+                                <button id="stripeSubmit" class="button" >Submit Payment</button>
+                                {{/vertexSession.user.loggedIn}}
+                                {{#vertexSession.user.notloggedIn}}
+                                <h3>Please log in to Pay!</h3>
+                                {{/vertexSession.user.notloggedIn}}
+                                <h1 class="hidden" id="stripeLoading" >Loading...</h1>
+                                <label>Powered By Stripe.</label>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <!-- stripe -->
+
+                    <!-- Opening Hours -->
+                    <div class="boxed-widget opening-hours margin-top-35">
+                        <div class="listing-badge now-open">Now Open</div>
+                        <h3><i class="sl sl-icon-clock"></i> Opening Hours</h3>
+                        <ul>
+                            {{#location.schedule}}
+                                <li>{{name}} <span> {{openTime}} - {{closeTime}} </span> </li>
+                            {{/location.schedule}}
+                        </ul>
+                    </div>
+                    <!-- Opening Hours / End -->
+
+
+                    <!-- Contact -->
+                    <div class="boxed-widget margin-top-35">
+                        <div class="hosted-by-title">
+                            <h4><span>Hosted by</span> <a href="pages-user-profile.html">Tom Perrin</a></h4>
+                            <a href="pages-user-profile.html" class="hosted-by-avatar"><img src="/images/dashboard-avatar.jpg" alt=""></a>
+                        </div>
+                        <ul class="listing-details-sidebar">
+                            {{#phoneBool}}
+                            <li><i class="sl sl-icon-phone"></i> {{ location.phoneNum }}</li>
+                            {{/phoneBool}}
+                            <!-- <li><i class="sl sl-icon-globe"></i> <a href="#">http://example.com</a></li> -->
+                            {{#websiteBool}}
+                            <li><i class="fa fa-envelope-o"></i> <a href="#">{{ location.email }}</a></li>
+                            {{/websiteBool}}
+                        </ul>
+
+                        <!--
+                        <ul class="listing-details-sidebar social-profiles">
+                            <li><a href="#" class="facebook-profile"><i class="fa fa-facebook-square"></i> Facebook</a></li>
+                            <li><a href="#" class="twitter-profile"><i class="fa fa-twitter"></i> Twitter</a></li>
+                        </ul>
+                        -->
+
+                        <!-- Reply to review popup -->
+                        <div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+                            <div class="small-dialog-header">
+                                <h3>Send Message</h3>
+                            </div>
+                            <div class="message-reply margin-top-0">
+                                <textarea cols="40" rows="3" placeholder="Your message to Tom"></textarea>
+                                <button class="button">Send Message</button>
+                            </div>
+                        </div>
+
+                        <a href="#small-dialog" class="send-message-to-owner button popup-with-zoom-anim"><i class="sl sl-icon-envelope-open"></i> Send Message</a>
+                    </div>
+                    <!-- Contact / End-->
+
+
+                    <!-- Share / Like -->
+                    <div class="listing-share margin-top-40 margin-bottom-40 no-border">
+                        <button class="like-button"><span class="like-icon"></span> Bookmark this listing</button> 
+                        <span>159 people bookmarked this place</span>
+
+                            <!-- Share Buttons -->
+                            <ul class="share-buttons margin-top-40 margin-bottom-0">
+                                <li><a class="fb-share" href="#"><i class="fa fa-facebook"></i> Share</a></li>
+                                <li><a class="twitter-share" href="#"><i class="fa fa-twitter"></i> Tweet</a></li>
+                                <li><a class="gplus-share" href="#"><i class="fa fa-google-plus"></i> Share</a></li>
+                                <!-- <li><a class="pinterest-share" href="#"><i class="fa fa-pinterest-p"></i> Pin</a></li> -->
+                            </ul>
+                            <div class="clearfix"></div>
+                    </div>
+
+                </div>
+                <!-- Sidebar / End -->
+
+            </div>
+        </div>
+
+    </div>
+    
+    
+    {{>scripts}}
+    {{>signInUpScript}}
+    {{>maps}}
+    {{>flatpickr}}
+    <script src="/scripts/stripe.js"></script>
+    <script type="text/javascript" >
+        $(function(){
+            // stops the bags qty input from being less than 1
+            const qtyFunc = function(e){
+                const num = $("#qtyBags").val()
+
+                if( parseInt(num) < 1 || num == "" ){
+                    $("#qtyBags").val("1")
+                    $("#stashError").html("Your quantity be larger than 0(zero)")
+                    $("#stashDiv").removeClass('hidden')
+                }
+            }
+            $("#qtyBags").change(qtyFunc)
+            $("#qtyBags").keyup(qtyFunc)
+
+            $("#stashClose").click(function(e){
+                $("#stashDiv").addClass('hidden')
+                $("#stashError").html("")
+            })
+
+            //sends a query to check if space is available on the days specified
+            //startDate endDate qtyBags 
+            $("#avil").on('click', function(){
+                const startDate   = $("#startDate").val()
+                const endDate     = $("#endDate").val()
+                const qtyBags     = $("#qtyBags").val()
+                const location_id = $("#location_id").val()
+                const d1          = new Date(startDate)
+                const d2          = new Date(endDate)
+
+                if( startDate == "" || endDate == "" || qtyBags == "" ){
+                    $("#stashError").html("Something is Empty!")
+                    $("#stashDiv").removeClass('hidden')
+                    return
+                }
+
+                if( d2 < d1 ){
+                    $("#stashError").html("Check your dates!")
+                    $("#stashDiv").removeClass('hidden')
+                    return
+                }
+                $("#queryDates").addClass('hidden')
+                $("#loading").removeClass('hidden')
+                $.ajax({
+					url: '/location/availability',
+					data: {
+						format:    'json',
+						startDate:   startDate,
+                        endDate:     endDate,
+                        qtyBags:     qtyBags,
+                        location_id: location_id
+					},
+					error: function(err) {
+                        $("#loading"   ).addClass("hidden"   )
+                        $("#queryDates").removeClass("hidden")
+						$("#stashError").html(err.message    )
+                        $("#stashDiv"  ).removeClass('hidden')
+					},
+					dataType: 'json',
+					success: function(data) {
+                        $("#formStartDate").val(startDate       )
+                        $("#formEndDate"  ).val(endDate         )
+                        $("#formCapacity" ).val(data.capacity   )
+                        $("#formQtyBags"  ).val(qtyBags         )
+                        $("#locationID"   ).val(location_id     )
+                        $("#loading"      ).addClass('hidden'   )
+                        $("#stripePay"    ).removeClass("hidden")
+                        $("#totalAmount"  ).html(data.sumTotal  )
+						//console.log("data: ",data)
+					},
+					type: 'POST'
+				})
+            })
+             
+            $("#stripeSubmit").on('click', function(){
+                $("#stripeSubmit").addClass('hidden')
+                $("#stripeLoading").removeClass('hidden')
+            })
+
+        })
+    </script>
+
+    </body>
+</html>

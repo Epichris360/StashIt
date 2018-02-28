@@ -1,0 +1,25 @@
+.header {
+    position: relative;
+    border-bottom: none;
+    background-position: center;
+    -webkit-background-size: cover;
+            background-size: cover;
+    background-repeat: no-repeat;
+    padding: 220px 0 100px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.header-inverse {
+    background-color: #191919;
+}
+
+.bg-fixed {
+    background-attachment: fixed;
+}
+
+.stroke {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+

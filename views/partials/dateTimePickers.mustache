@@ -1,0 +1,31 @@
+<!-- Date Picker - docs: http://www.vasterad.com/docs/listeo/#!/date_picker -->
+<link href="/css/plugins/datedropper.css" rel="stylesheet" type="text/css">
+<script src="/scripts/datedropper.js"></script>
+<script type="text/javascript" >
+
+	$('#booking-date').dateDropper();
+
+</script>
+
+<!-- Time Picker - docs: http://www.vasterad.com/docs/listeo/#!/time_picker -->
+<script src="/scripts/timedropper.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/plugins/timedropper.css"> 
+<script type="text/javascript" >
+
+		this.$('#booking-time').timeDropper({
+			setCurrentTime: false,
+			meridians: true,
+			primaryColor: "#f91942",
+			borderColor: "#f91942",
+			minutesInterval: '15'
+		});
+
+		var $clocks = $('.td-input');
+			_.each($clocks, function(clock){
+			clock.value = null;
+		});
+
+</script> 
+
+<!-- Booking Widget - Quantity Buttons -->
+<script src="/scripts/quantityButtons.js"></script>

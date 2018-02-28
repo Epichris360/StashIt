@@ -1,0 +1,111 @@
+{{>head}}
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="gradient">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Listings</h2><span>Grid Layout With Sidebar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		
+		<!-- Search -->
+		<div class="col-md-12">
+			<div class="main-search-input gray-style margin-top-0 margin-bottom-10">
+
+				<div class="main-search-input-item">
+					<select data-placeholder="All Categories" class="chosen-select" id="city" >
+                        {{#cities}}
+						<option value="{{name}}" >{{name}}</option>
+                        {{/cities}}
+					</select>
+				</div>
+
+				<div class="main-search-input-item">
+					<select data-placeholder="All Categories" class="chosen-select" id="listCat" >
+                        <option value="All" >All</option>
+                        {{#listCats}}
+						<option value="{{name}}">{{name}}</option>	
+						{{/listCats}}
+					</select>
+				</div>
+
+				<button class="button" id="categoryBtn" >Search</button>
+			</div>
+		</div>
+		<!-- Search Section / End -->
+
+
+		<div class="col-md-12">
+
+			<div class="row">
+                {{#locations}}
+				<!-- Listing Item -->
+				<div class="col-lg-4 col-md-6">
+					<a href="/location/show/{{slug}}" class="listing-item-container compact">
+						<div class="listing-item">
+							<img src="{{img}}" alt="">
+
+							<div class="listing-badge now-open">Now Open</div>
+
+							<div class="listing-item-content">
+								<div class="numerical-rating" data-rating="3.5"></div>
+								<h3>{{name}}</h3>
+								<span>{{address}}, {{city}}</span>
+							</div>
+							<!--<span class="like-icon"></span>-->
+						</div>
+					</a>
+				</div>
+				<!-- Listing Item / End -->
+                {{/locations}}
+
+					
+
+				
+
+			</div>
+
+			<!-- Pagination -->
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Pagination -->
+					<div class="pagination-container margin-top-20 margin-bottom-40">
+						<nav class="pagination">
+							<ul>
+								<li><a class="{{pgLinks.backward.class}}" href="/location/list?city={{city}}&listCat={{listCat}}&page={{pgLinks.backward.num}}"><i class="sl sl-icon-arrow-left "></i></a></li>
+								<li><a class="{{pgLinks.forward.class}}" href="/location/list?city={{city}}&listCat={{listCat}}&page={{pgLinks.forward.num}}"><i class="sl sl-icon-arrow-right "></i></a></li>
+							</ul>
+						</nav>
+					</div> 
+				</div>
+			</div>
+			<!-- Pagination / End -->
+
+		</div>
+
+	</div>
+</div>
+
+{{>scripts}}
+{{>signInUpScript}}
+    <script type="text/javascript" >
+        $(function(){
+            $("#categoryBtn").on('click', function(){
+                const city    = $("#city").val()
+                const listCat = $("#listCat").val()
+                window.location.href = window.location.href.split(/[?#]/)[0] + `?city=${city}&listCat=${listCat}`
+            })
+        })
+    </script>
+
+    </body>
+</html>

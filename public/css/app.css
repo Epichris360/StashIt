@@ -1,0 +1,17 @@
+.big {
+    height: 60px;
+    width: 100px;
+}
+.small {
+    height: 40px;
+    width: 70px;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;   
+}
+
+.disabled i{
+    color: #FF0000;
+}
