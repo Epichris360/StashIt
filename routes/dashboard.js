@@ -17,8 +17,6 @@ router.get("/edit-location-:slug",  dashboardController.edit		   )
 router.post("/edit-location-:slug", dashboardController.update		   )
 router.get("/my-locations", 		dashboardController.locationsList  )
 router.get("/active-stash-:slug", 	dashboardController.activeStashing )
-router.get("/update-now", dashboardController.updateNow)
-
 
 router.get("/", 			dashboardController.index 		       )
 

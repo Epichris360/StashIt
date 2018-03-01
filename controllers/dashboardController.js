@@ -263,35 +263,7 @@ const changeStatus = (req, res) => {
     // 
 }
 
-const updateNow = (req, res) => {
-    turbo.fetch( collections.stashed, null )
-    .then(data => {
-        return data
-    })
-    .then( stashed => {
-        for( let x = 0; x < stashed.length; x++ ){
-            stashed[x].ticket = functions.randTicket()
-            turbo.updateEntity( collections.stashed, stashed[x].id, stashed )
-            .then(stashed => {
-                if( x == statshed.length - 1 ){
-                    res.status(200).json({
-                        works: true
-                    })
-                    return
-                }
-            })
-            .catch(err => {
-                res.status(500).json({error: true})
-                return
-            })
-        }
 
-    })
-    .catch(err => {
-        res.status(500).json({error: true})
-        return
-    })
-}
  
 module.exports = {
     addListing:     addListing, 
@@ -300,6 +272,5 @@ module.exports = {
     edit:           edit,
     update:         update,
     locationsList:  locationsList,
-    activeStashing: activeStashing,
-    updateNow:      updateNow
+    activeStashing: activeStashing
 }

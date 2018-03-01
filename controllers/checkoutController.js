@@ -77,6 +77,7 @@ const payment         = (req, res) => {
             return  
         }
         stashed.charge = charge
+        stashed.ticket = functions.randTicket() 
 
         //first save record .then() do loop to save capacity changes, then redirect. IN THIS ORDER
         turbo.create( collections.stashed, stashed )
