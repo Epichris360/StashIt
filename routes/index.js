@@ -101,29 +101,7 @@ router.get("/get-data", (req, res) => {
 	})
 })
 
-router.get("/updateLocation", (req, res) => {
-	turbo.fetch( collections.locations, null )
-	.then(data => {
-		const imgLink = JSON.parse( data[0].imgLink )
-		data[0].imgLink = imgLink[0]
-		return data[0]
-	})
-	.then( location => {
-		turbo.updateEntity( collections.locations, location.id, location )
-		.then(data => {
-			res.status(200).json({
-				data: data
-			})
-			return
-		})
-	})
-	.catch(err => {
-		res.status(500).json({
-			err: err.message
-		})
-		return
-	})
-})
+
 
 
 module.exports = router

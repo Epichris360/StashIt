@@ -253,6 +253,13 @@ const activeStashing = (req, res) => {
             for( let x = 0; x < data.length; x++ ){
                 data[x].days = ( new Date(data[x].endDate) - new Date(data[x].startDate) ) / (1000 * 60 * 60 * 24) 
             }
+            // get btn to change statuses tommorrow, add pagination and search
+            // that should do it for the dashboard. Maybe delete the main dashboard page
+
+            // Finish adding ratings system and comments to locations
+
+            // small dashboard for users
+            // Finish by Wednesday!!!!
             res.render('dashBoardPages/stashListings',{ stashed: data })
             return  
         })
@@ -277,25 +284,27 @@ const changeStatus = (req, res) => {
 }
 
 const updateNow = (req, res) => {
-    //stashed.status = constants.stashStatus[0]
-    turbo.fetch(collections.stashed, null)
+    turbo.fetch( collections.stashed, null )
     .then(data => {
-        data[1].status = constants.stashStatus[0]
-        turbo.updateEntity(collections.stashed, data[1].id, data[1])
-        .then(update => {
+        return data[1]
+    })
+    .then( location => {
+        location.status = constants.stashStatus[0]
+        turbo.updateEntity( collections.stashed, location.id, location )
+        .then(data => {
             res.status(200).json({
-                update
+                data: data
             })
             return
         })
     })
     .catch(err => {
         res.status(500).json({
-            err: true
+            err: err.message
         })
+        return
     })
 }
-
  
 module.exports = {
     addListing:     addListing, 

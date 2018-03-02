@@ -21,6 +21,8 @@ router.post("/change-status",		dashboardController.changeStatus   )
 
 router.get("/update-now", dashboardController.updateNow)
 
+//buttons for check in next
+
 router.get("/", 			dashboardController.index 		       )
 
 

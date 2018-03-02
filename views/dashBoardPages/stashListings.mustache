@@ -48,9 +48,11 @@
 							<td>{{sumTotal}}</td>
 							<td>{{qtyBags}}</td>
 							<td>{{days}}</td>
-							<td>
-								<button class="btn btn-green checkInBtn" data-id="{{id}}" data-name="CheckIn" >
-									Check in
+							<td  >
+								<button class="btn {{status.btnColor}} {{status.class}}" 
+									data-id="{{id}}" data-name="CheckIn" data-status-id="{{status.id}}"
+								>
+									{{status.name}}
 								</button>
 							</td>
 						</tr>
@@ -78,14 +80,15 @@
 				console.log('searchTerm: ',searchTerm)
 			})
 
-			$(".checkInBtn").on('click', function(e){
-				const checkInID =  $(this).attr("data-id") 
-
+			$(".check-in").on('click', function(e){
+				const checkInID = $(this).attr("data-id") 
+				const statusID  = $(this).attr("data-status-id")
 				$.ajax({
 					url: '/dashboard/change-status',
 					data: {
 						format:    'json',
-						checkInID: checkInID
+						checkInID: checkInID,
+						statusID:  statusID
 					},
 					error: function(err) {
                         console.log('err: ',err)

@@ -42,7 +42,9 @@ module.exports = {
     ],    
 
     stashStatus: [
-        {name:"Check In", id:0}, {name:"Check Out", id: 1}, {name:"Checked Out", id:2}
+        {name:"Check In",    class:"check-in",    id:0, btnColor:"btn-green"  }, 
+        {name:"Check Out",   class:"check-out",   id:1, btnColor:"btn-orange" }, 
+        {name:"Checked Out", class:"checked-out", id:2, btnColor:"btn-red"    }
     ]
 
 }
