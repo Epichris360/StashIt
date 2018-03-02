@@ -15,3 +15,24 @@
 .disabled i{
     color: #FF0000;
 }
+
+.btn{
+    border-radius: 50px; width: 100px; height: 40px; 
+    font-size:15px; font-weight: 600; color: #fff;
+}
+
+.btn-red{
+    background: red;
+}
+
+.btn-black{
+    background: black;
+}
+
+.btn-orange{
+    background: orange;
+}
+
+.btn-green{
+    background: green;
+}

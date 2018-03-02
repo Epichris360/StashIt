@@ -37,6 +37,7 @@
 							<th>Ticket Number</th>
 							<th>Sum Total</th>
 							<th>Number of Bags</th>
+							<th>Number of Days</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -46,9 +47,11 @@
 							<td>{{ticket}}</td>
 							<td>{{sumTotal}}</td>
 							<td>{{qtyBags}}</td>
+							<td>{{days}}</td>
 							<td>
-								<button class="button" style="width: 100px; height: 40px; font-size:13px;background: gray;" 
-								>Check in</button>
+								<button class="btn btn-green checkInBtn" data-id="{{id}}" data-name="CheckIn" >
+									Check in
+								</button>
 							</td>
 						</tr>
 						{{/stashed}}
@@ -74,6 +77,30 @@
 				const searchTerm = $("#searchTerm").val()
 				console.log('searchTerm: ',searchTerm)
 			})
+
+			$(".checkInBtn").on('click', function(e){
+				const checkInID =  $(this).attr("data-id") 
+
+				$.ajax({
+					url: '/dashboard/change-status',
+					data: {
+						format:    'json',
+						checkInID: checkInID
+					},
+					error: function(err) {
+                        console.log('err: ',err)
+					},
+					dataType: 'json',
+					success: function(data) {
+                        console.log('data: ', data)
+					},
+					type: 'POST'
+				})
+			})
+
+			$(".checkOutBtn").on('click', function(e){
+				const checkOutID = $(this).attr("data-id")
+			}) 
 		})
 	</script>
     </body> 

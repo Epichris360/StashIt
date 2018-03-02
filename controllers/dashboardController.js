@@ -2,6 +2,9 @@ const turbo       = require('turbo360')({site_id: process.env.TURBO_APP_ID})
 const collections = require('../collections')
 const constants   = require('../constants') 
 const functions   = require('../functions')
+const Moment      = require('moment')
+const MomentRange = require('moment-range');
+const moment      = MomentRange.extendMoment(Moment);
 
 const addListing   = (req, res) => {
     const user = req.vertexSession.user
@@ -230,7 +233,7 @@ const activeStashing = (req, res) => {
     // how to search for specific stashes? code of some kind like A23?
     const slug = req.params.slug
     const user = req.vertexSession.user
-    console.log('user: ',user)
+    
     turbo.fetch( collections.locations, { slug } )
     .then(data => {
         if( data[0].owner_id == user.id ){
@@ -245,8 +248,13 @@ const activeStashing = (req, res) => {
     .then( location => {
         turbo.fetch( collections.stashed, { location_id: location.id } )
         .then(data => {
+            //add status attr to the stashed objects on creation
+            //query which 
+            for( let x = 0; x < data.length; x++ ){
+                data[x].days = ( new Date(data[x].endDate) - new Date(data[x].startDate) ) / (1000 * 60 * 60 * 24) 
+            }
             res.render('dashBoardPages/stashListings',{ stashed: data })
-            return
+            return  
         })
     })
     .catch(err => {
@@ -255,14 +263,38 @@ const activeStashing = (req, res) => {
         })
         return
     })
-    return
 }
 
 const changeStatus = (req, res) => {
     // changes the status of a stash. ex: someone brings in the bags and they are set to stashed
-    // 
+    const id = req.body.checkInID
+
+    console.log("checkInID: ",id)
+    res.status(200).json({
+        works: true
+    })
+    return
 }
 
+const updateNow = (req, res) => {
+    //stashed.status = constants.stashStatus[0]
+    turbo.fetch(collections.stashed, null)
+    .then(data => {
+        data[1].status = constants.stashStatus[0]
+        turbo.updateEntity(collections.stashed, data[1].id, data[1])
+        .then(update => {
+            res.status(200).json({
+                update
+            })
+            return
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            err: true
+        })
+    })
+}
 
  
 module.exports = {
@@ -272,5 +304,7 @@ module.exports = {
     edit:           edit,
     update:         update,
     locationsList:  locationsList,
-    activeStashing: activeStashing
+    activeStashing: activeStashing,
+    changeStatus:   changeStatus,
+    updateNow:      updateNow
 }

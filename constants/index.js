@@ -41,4 +41,8 @@ module.exports = {
         {num:11, month:"November"}, {num:12, month:"December"}
     ],    
 
+    stashStatus: [
+        {name:"Check In", id:0}, {name:"Check Out", id: 1}, {name:"Checked Out", id:2}
+    ]
+
 }
