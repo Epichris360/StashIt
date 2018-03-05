@@ -233,6 +233,8 @@ const activeStashing = (req, res) => {
     // how to search for specific stashes? code of some kind like A23?
     const slug = req.params.slug
     const user = req.vertexSession.user
+
+    functions.isAuth( user, res )
     
     turbo.fetch( collections.locations, { slug } )
     .then(data => {
@@ -260,6 +262,14 @@ const activeStashing = (req, res) => {
 
             // small dashboard for users
             // Finish by Wednesday!!!!
+
+            //Next project do something map related
+            // --> Simple meetup clone with google maps markers to show where the meetups are
+            // --> Simple tourism app showing where shops etc are in a city like kiwi.com
+            // --> simple slack clone
+            // that makes 4.. Practice using mongoose and whatever other tech is hevily requested
+            // apply to every remote javascript role i can find
+            // Learn either react native or flutter
             res.render('dashBoardPages/stashListings',{ stashed: data })
             return  
         })
@@ -274,13 +284,46 @@ const activeStashing = (req, res) => {
 
 const changeStatus = (req, res) => {
     // changes the status of a stash. ex: someone brings in the bags and they are set to stashed
-    const id = req.body.checkInID
-
-    console.log("checkInID: ",id)
-    res.status(200).json({
-        works: true
+    const id       = req.body.checkInID
+    const statusID = req.body.statusID
+    
+    turbo.fetchOne( collections.stashed, id )
+    .then(data => {
+        constants.stashStatus
+        if( statusID == 0 && data.status.id == 0 ){ //check-in
+            data.status = constants.stashStatus[1]
+        }else if( statusID == 1 && data.status.id == 1 ){
+            data.status = constants.stashStatus[2]
+        }
+        /*turbo.updateEntity( collections.stashed, data.id, data )
+        .then(update => {*/
+            res.status(200).json({
+                update : data
+            })
+            return
+        //})
     })
-    return
+    .catch(err => {
+        res.status(500).json({
+            err: err.message
+        })
+        return
+    })
+}
+
+const searchTicket = (req, res) => {
+    const ticket = req.params.tick_num
+    const state  = req.params.state
+    turbo.fetch( collections.stashed, { ticket } )
+    .then(data => {
+
+    })
+    .catch(err => {
+        //replace these with backs and error msgs
+        res.status(200).json({
+            err: err.message
+        })
+    })
 }
 
 const updateNow = (req, res) => {
