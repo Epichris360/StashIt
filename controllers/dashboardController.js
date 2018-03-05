@@ -285,11 +285,11 @@ const activeStashing = (req, res) => {
 const changeStatus = (req, res) => {
     // changes the status of a stash. ex: someone brings in the bags and they are set to stashed
     const id       = req.body.checkInID
-    const statusID = req.body.statusID
+    const statusID = req.body.statusId
     
     turbo.fetchOne( collections.stashed, id )
     .then(data => {
-        constants.stashStatus
+        
         if( statusID == 0 && data.status.id == 0 ){ //check-in
             data.status = constants.stashStatus[1]
         }else if( statusID == 1 && data.status.id == 1 ){

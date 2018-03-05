@@ -49,7 +49,7 @@
 							<td>{{qtyBags}}</td>
 							<td>{{days}}</td>
 							<td  >
-								<button class="btn {{status.btnColor}} check" 
+								<button id="btn-{{id}}" class="btn {{status.btnColor}} check" 
 									data-id="{{id}}" data-name="CheckIn" data-status-id="{{status.id}}"
 								>
 									{{status.name}}
@@ -84,31 +84,33 @@
 			$(".check").on('click', function(e){
 				const checkInID = $(this).attr("data-id") 
 				const statusID  = $(this).attr("data-status-id")
+				const btn = $(this)
 				$(this).addClass('hidden')
-				$("loading-"+checkInID).removeClass('hidden')
+				$("#loading-"+checkInID).removeClass('hidden')
 				$.ajax({
 					url: '/dashboard/change-status',
 					data: {
 						format:    'json',
 						checkInID: checkInID,
-						statusID:  statusID
+						statusId:  statusID
 					},
 					error: function(err) {
-                        $("loading-"+checkInID).addClass('hidden')
+                        $("#loading-"+checkInID).addClass('hidden')
+						btn.removeClass('hidden')
+						console.log('err:',err)
 					},
 					dataType: 'json',
 					success: function(data) {
-						$("loading-"+checkInID).addClass('hidden')
-                        $(this).attr("data-status-id") = data.status.id
-						$(this).removeClass()
-						$(this).addClass('btn')
-						$(this).addClass(data.status.btnColor)
+						console.log('data:',data)
+						btn.removeClass()
+						$("#loading-"+checkInID).addClass('hidden')
+                        btn.attr("data-status-id", data.update.status.id)
+						btn.html(data.update.status.name)
+						btn.addClass('btn check '+data.update.status.btnColor)
 					},
 					type: 'POST'
 				})
 			})
-
-			
 		})
 	</script>
     </body> 
