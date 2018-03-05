@@ -228,11 +228,16 @@ const locationsList = (req, res) => {
 }
 
 const activeStashing = (req, res) => {
-    //see structure of stash to see how to conduct search
-    // activeStr: "true"
-    // how to search for specific stashes? code of some kind like A23?
     const slug = req.params.slug
     const user = req.vertexSession.user
+
+    // Pagination!
+    let page
+    if( typeof req.query.page == "undefined" || req.query.page == 1 ){
+        page = 0
+    }else{
+        page = req.query.page - 1
+    }
 
     functions.isAuth( user, res )
     
@@ -255,7 +260,7 @@ const activeStashing = (req, res) => {
             for( let x = 0; x < data.length; x++ ){
                 data[x].days = ( new Date(data[x].endDate) - new Date(data[x].startDate) ) / (1000 * 60 * 60 * 24) 
             }
-            // get btn to change statuses tommorrow, add pagination and search
+            // get btn to change statuses tommorrow, add pagination and search, old ones
             // that should do it for the dashboard. Maybe delete the main dashboard page
 
             // Finish adding ratings system and comments to locations
@@ -270,7 +275,11 @@ const activeStashing = (req, res) => {
             // that makes 4.. Practice using mongoose and whatever other tech is hevily requested
             // apply to every remote javascript role i can find
             // Learn either react native or flutter
-            res.render('dashBoardPages/stashListings',{ stashed: data })
+            
+            
+            const pageData = functions.paginationArrays(data,6)
+            const pgLinks  = functions.pgLinks(pageData.length, page)
+            res.render('dashBoardPages/stashListings',{ stashed: pageData[page], pgLinks: pgLinks, slug: slug })
             return  
         })
     })
@@ -289,19 +298,19 @@ const changeStatus = (req, res) => {
     
     turbo.fetchOne( collections.stashed, id )
     .then(data => {
-        
+        data.status.id = 1
         if( statusID == 0 && data.status.id == 0 ){ //check-in
             data.status = constants.stashStatus[1]
         }else if( statusID == 1 && data.status.id == 1 ){
             data.status = constants.stashStatus[2]
         }
-        /*turbo.updateEntity( collections.stashed, data.id, data )
-        .then(update => {*/
+        turbo.updateEntity( collections.stashed, data.id, data )
+        .then(update => {
             res.status(200).json({
                 update : data
             })
             return
-        //})
+        })
     })
     .catch(err => {
         res.status(500).json({

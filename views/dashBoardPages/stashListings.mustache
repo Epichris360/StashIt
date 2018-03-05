@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12 col-sm-12 col-md-12">
 				<table class="table" >
 					<thead>
 						<tr>
@@ -62,6 +62,11 @@
 				</table>
             </div>
         </div>
+		<div class="row" >
+			<a class="btn-2 btn-white {{pgLinks.backward.class}}" href="/dashboard/active-stash-{{slug}}?page={{pgLinks.backward.num}}" > < Backwards</a>
+
+            <a class="btn-2 btn-white {{pgLinks.forward.class}} pull-right" href="/dashboard/active-stash-{{slug}}?page={{pgLinks.forward.num}}">Forwards > </a>
+		</div>
     </div>
 
     {{>scriptsDash}}
