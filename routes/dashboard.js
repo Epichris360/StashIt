@@ -18,8 +18,7 @@ router.post("/edit-location-:slug", dashboardController.update		   )
 router.get("/my-locations", 		dashboardController.locationsList  )
 router.get("/active-stash-:slug", 	dashboardController.activeStashing )
 router.post("/change-status",		dashboardController.changeStatus   )
-
-router.get("/update-now", dashboardController.updateNow)
+router.post("/search-ticket",		dashboardController.searchTicket   )
 
 //buttons for check in next
 

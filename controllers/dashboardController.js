@@ -279,7 +279,7 @@ const activeStashing = (req, res) => {
             
             const pageData = functions.paginationArrays(data,6)
             const pgLinks  = functions.pgLinks(pageData.length, page)
-            res.render('dashBoardPages/stashListings',{ stashed: pageData[page], pgLinks: pgLinks, slug: slug })
+            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: pageData[page], pgLinks: pgLinks, slug: slug })
             return  
         })
     })
@@ -321,11 +321,24 @@ const changeStatus = (req, res) => {
 }
 
 const searchTicket = (req, res) => {
-    const ticket = req.params.tick_num
-    const state  = req.params.state
+    const ticket = req.body.search.toUpperCase()
+    const slug   = req.body.slug
+    
+    if(ticket.length == 0){ 
+        res.redirect("/dashboard/active-stash-"+slug) 
+        return
+    }
     turbo.fetch( collections.stashed, { ticket } )
     .then(data => {
-
+        if( data.length == 0 ){
+            //res.render('dashBoardPages/stashListings',{ stashed: pageData[page], pgLinks: pgLinks, slug: slug })
+            const pgLinks = { backward:{class:"disabled"}, forward:{class:"disabled"} }
+            res.render('dashBoardPages/stashListings',{ empty:true, pgLinks: pgLinks, slug: slug })
+        }else{
+            // re format the above mustache template to display the one result
+            const pgLinks = { backward:{class:"disabled"}, forward:{class:"disabled"} }
+            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: data, pgLinks: pgLinks, slug: slug})
+        }
     })
     .catch(err => {
         //replace these with backs and error msgs
@@ -335,28 +348,6 @@ const searchTicket = (req, res) => {
     })
 }
 
-const updateNow = (req, res) => {
-    turbo.fetch( collections.stashed, null )
-    .then(data => {
-        return data[1]
-    })
-    .then( location => {
-        location.status = constants.stashStatus[0]
-        turbo.updateEntity( collections.stashed, location.id, location )
-        .then(data => {
-            res.status(200).json({
-                data: data
-            })
-            return
-        })
-    })
-    .catch(err => {
-        res.status(500).json({
-            err: err.message
-        })
-        return
-    })
-}
  
 module.exports = {
     addListing:     addListing, 
@@ -367,5 +358,5 @@ module.exports = {
     locationsList:  locationsList,
     activeStashing: activeStashing,
     changeStatus:   changeStatus,
-    updateNow:      updateNow
+    searchTicket:   searchTicket
 }
