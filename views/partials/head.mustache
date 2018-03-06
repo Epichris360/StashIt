@@ -61,10 +61,13 @@
 							</ul>
 						</li>
 						{{#vertexSession.user.loggedIn}}
-						<li><a href="/dashboard">Dashboard</a>
-						</li>
+							<li><a href="/dash">Customer Dash</a>
+							</li>
 						{{/vertexSession.user.loggedIn}}
-						
+						{{#vertexSession.user.stasher}}
+							<li><a href="/dashboard">Stasher Dash</a>
+							</li>
+						{{/vertexSession.user.stasher}}	
 					</ul>
 				</nav>
 				<div class="clearfix"></div>

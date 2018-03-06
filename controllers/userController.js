@@ -10,7 +10,7 @@ const signin = (req, res) => {
         const canEdit = (data.role != constants.customer.seller || data.role != constants.customer.buyer)
         req.vertexSession.user = { id: data.id, username: data.username, 
             firstName: data.firstName, lastName: data.lastName, role: data.role,
-            email: data.email, loggedIn: true, payout: 0,
+            email: data.email, loggedIn: true, payout: 0, stasher: data.role == constants.stasher,
             notloggedIn:false, canEdit: canEdit
         }
 
@@ -51,7 +51,7 @@ const signup = (req, res) => {
         const canEdit = (data.role != constants.customer || data.role != constants.stasher )
         req.vertexSession.user = { id: data.id, username: data.username, 
             firstName: data.firstName, lastName: data.lastName, role: data.role,
-            email: data.email, loggedIn: true,
+            email: data.email, loggedIn: true, stasher: data.role == constants.stasher,
             notloggedIn:false, canEdit: canEdit
         }
         const cart = {

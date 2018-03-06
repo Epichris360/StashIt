@@ -1,0 +1,76 @@
+ {{>head}}
+    <!-- Titlebar
+    ================================================== -->
+    <div id="titlebar" class="gradient">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <h2>DashBoard</h2><span>Check Up on Your Stashes..</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Content
+================================================== -->
+<div class="container">
+	<div class="row">
+		<!-- Search -->
+		<div class="col-md-12 col-lg-12 col-sm-12">
+            <table class="table" style="background:#f7f7f7; border: 1px solid #e0e0e0;" >
+                <thead>
+                    <tr>
+                        <th>Ticket Number</th>
+                        <th>Sum Total</th>
+                        <th>Number of Bags</th>
+                        <th>Number of Days</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#stashed}}
+                    <tr>
+                        <td>{{ticket}}</td>
+                        <td>{{sumTotal}}</td>
+                        <td>{{qtyBags}}</td>
+                        <td>{{days}}</td>
+                        <td>
+                            <h3>
+                                {{status.name}}
+                            </h3>
+                        </td>
+                    </tr>
+                    {{/stashed}}
+                </tbody>
+            </table>
+		</div>
+		<!-- Search Section / End -->
+
+
+		<div class="col-md-12">
+
+			<!-- Pagination -->
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Pagination -->
+					
+				</div>
+			</div>
+			<!-- Pagination / End -->
+
+		</div>
+
+	</div>
+</div>
+
+{{>scripts}}
+{{>signInUpScript}}
+    <script type="text/javascript" >
+        $(function(){
+            
+        })
+    </script>
+
+    </body>
+</html>
