@@ -9,6 +9,7 @@ const moment      = MomentRange.extendMoment(Moment);
 
 const show = (req, res) => {
     const location_slug = req.params.location_slug
+    const vertexSession = req.vertexSession
 
     turbo.fetch( collections.locations, { slug: location_slug } )
     .then(data => {
@@ -17,7 +18,7 @@ const show = (req, res) => {
         const phoneBool   = ( data[0].phoneNum != ""  )
         const websiteBool = ( data[0].email    != "" )
         res.render("locations/show",{ location: data[0], img: img, description: description, 
-            phoneBool: phoneBool, websiteBool: websiteBool })
+            phoneBool: phoneBool, websiteBool: websiteBool, vertexSession })
         return
     })
     .catch(err => {
@@ -36,6 +37,7 @@ const availability = (req, res) => {
     const endDate     = new Date( body.endDate )
     const location_id = body.location_id
     const bagsNum     = parseInt( body.qtyBags )
+    
 
     // 4 different scenarios
     // Either person will stash for one day
@@ -248,7 +250,7 @@ const list = (req, res) => {
         }else{
             page = parseInt( req.query.page ) - 1
         }
-
+        const vertexSession = req.vertexSession
         const cities   = constants.cities
         const listCats = constants.listCats
         for( let x = 0; x < data.length; x++ ){
@@ -269,7 +271,7 @@ const list = (req, res) => {
         const pageData  = functions.paginationArrays(locations, 8)
         const pgLinks   = functions.pgLinks(pageData.length, page)
  
-        res.render('locations/list', { locations: pageData[page], 
+        res.render('locations/list', { locations: pageData[page], vertexSession,
             cities: cities, listCats: listCats, pgLinks: pgLinks, city:city, listCat: listCat })
         return
     }).catch(err => {

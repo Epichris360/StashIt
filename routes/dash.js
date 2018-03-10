@@ -15,3 +15,4 @@ const dashController = require('../controllers/dashController')
 router.get('/', dashController.index )
 
 module.exports = router
+ 

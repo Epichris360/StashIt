@@ -9,14 +9,14 @@ const root = (req, res) => {
         const sanFran = data.filter(d => d.city == constants.cities[1].name ).length
         const nyc     = data.filter(d => d.city == constants.cities[0].name ).length
         const La      = data.filter(d => d.city == constants.cities[2].name ).length
-        res.render('index', { austin, sanFran, nyc, La })
+        const vertexSession = req.vertexSession
+        res.render('index', { austin, sanFran, nyc, La, vertexSession })
         return
     })
     .catch(err => {
         res.redirect('/')
         return
     })
-    turbo.logout()    
 }
 
 module.exports = {

@@ -11,7 +11,8 @@ const addListing   = (req, res) => {
     functions.isStasher(user, res)
     const listCats = constants.listCats
     const cities   = constants.cities
-    res.render('dashBoardPages/AddLocation',{ listCats: listCats, cities: cities })
+    const vertexSession = req.vertexSession
+    res.render('dashBoardPages/AddLocation',{ listCats: listCats, cities: cities, vertexSession })
 }
 
 const addListingPost = (req, res) => {
@@ -35,6 +36,7 @@ const addListingPost = (req, res) => {
     const days        = body["day[]"]
     const openTime    = body["openTime[]"]
     const closeTime   = body["closeTime[]"]
+    const vertexSession = req.vertexSession
 
     const times      = constants.times
     const indexTime  = times.map( t => t.name  )
@@ -101,7 +103,7 @@ const addListingPost = (req, res) => {
 		return location
     })
     .then(location => {
-        res.redirect("/location/show/"+location.slug)
+        res.redirect("/location/show/"+location.slug,{ vertexSession })
         return
     })
     .catch(err => {
@@ -115,12 +117,14 @@ const addListingPost = (req, res) => {
 const index = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
-    res.render('dashBoardPages/index')
+    const vertexSession = req.vertexSession
+    res.render('dashBoardPages/index', {vertexSession})
     return
 }
 
 const edit = (req, res) => {
     const slug = req.params.slug
+    const vertexSession = req.vertexSession
     turbo.fetch( collections.locations, { slug })
     .then(data => {
         let times     = []
@@ -133,7 +137,7 @@ const edit = (req, res) => {
         const cities   = functions.selected( data[0], constants.cities, "city" )
 
         res.render('dashBoardPages/EditLocation',
-            { location: data[0], listCats: listCats, cities: cities, times: times })
+            { location: data[0], listCats: listCats, cities: cities, times: times, vertexSessions })
         return
     })
     .catch(err => {
@@ -165,6 +169,7 @@ const update = (req, res) => {
     const days        = body["day[]"]
     const openTime    = body["openTime[]"]
     const closeTime   = body["closeTime[]"]
+    const vertexSession = req.vertexSession
 
     const times      = constants.times
     const indexTime  = times.map( t => t.name  )
@@ -199,7 +204,7 @@ const update = (req, res) => {
     .then(location => {
         turbo.updateEntity( collections.locations, location.id, updatedLocation )
         .then(data => {
-            res.redirect("/dashboard/my-locations")
+            res.redirect("/dashboard/my-locations",{vertexSession})
         })
         return
     })
@@ -215,8 +220,9 @@ const locationsList = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
     turbo.fetch( collections.locations, { owner_id: user.id } )
+    const vertexSession = req.vertexSession
     .then(data => {
-        res.render('dashBoardPages/myList',{ locations: data })
+        res.render('dashBoardPages/myList',{ locations: data, vertexSession })
         return
     })
     .catch(err => {
@@ -240,6 +246,7 @@ const activeStashing = (req, res) => {
     }
 
     functions.isAuth( user, res )
+    const vertexSession = req.vertexSession
     
     turbo.fetch( collections.locations, { slug } )
     .then(data => {
@@ -279,7 +286,8 @@ const activeStashing = (req, res) => {
             
             const pageData = functions.paginationArrays(data,6)
             const pgLinks  = functions.pgLinks(pageData.length, page)
-            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: pageData[page], pgLinks: pgLinks, slug: slug })
+            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: pageData[page], 
+                    pgLinks: pgLinks, slug: slug, vertexSession })
             return  
         })
     })
@@ -323,7 +331,7 @@ const changeStatus = (req, res) => {
 const searchTicket = (req, res) => {
     const ticket = req.body.search.toUpperCase()
     const slug   = req.body.slug
-    
+    const vertexSession = req.vertexSession
     if(ticket.length == 0){ 
         res.redirect("/dashboard/active-stash-"+slug) 
         return
@@ -333,11 +341,13 @@ const searchTicket = (req, res) => {
         if( data.length == 0 ){
             //res.render('dashBoardPages/stashListings',{ stashed: pageData[page], pgLinks: pgLinks, slug: slug })
             const pgLinks = { backward:{class:"disabled"}, forward:{class:"disabled"} }
-            res.render('dashBoardPages/stashListings',{ empty:true, pgLinks: pgLinks, slug: slug })
+            res.render('dashBoardPages/stashListings',{ empty:true, pgLinks: pgLinks, 
+                slug: slug, vertexSession })
         }else{
             // re format the above mustache template to display the one result
             const pgLinks = { backward:{class:"disabled"}, forward:{class:"disabled"} }
-            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: data, pgLinks: pgLinks, slug: slug})
+            res.render('dashBoardPages/stashListings',{ notEmpty:true, stashed: data, 
+                pgLinks: pgLinks, slug: slug, vertexSession})
         }
     })
     .catch(err => {
