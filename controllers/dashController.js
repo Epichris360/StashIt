@@ -6,6 +6,9 @@ const functions   = require('../functions')
 const index = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     let page
     if( typeof req.query.page == "undefined" || req.query.page == 1 ){

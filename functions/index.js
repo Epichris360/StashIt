@@ -40,8 +40,7 @@ const paginationArrays = (arr, chunkSize) => {
 
 const pgLinks = (num, activePg) => {
     activePg++
-    //8, 8
-    //console.log("num: ",num,"activePg: ",activePg)
+    
     let paginationLinks = {}
     if( num > activePg && (activePg - 1) > 0 ){
         paginationLinks.forward  = { class: '', num: activePg + 1 }
@@ -160,6 +159,14 @@ const capitalizeFirstLetter = (string) => {
     return string[0].toUpperCase() + string.slice(1);
 }
 
+const blankVertexSession = (req) => {
+    req.vertexSession.user = { id: '', username: '', email:'', loggedIn: false, notloggedIn: true, canEdit:false, role:'' }
+    req.vertexSession.msg  = { show: false, text:'', type:'' }
+    req.vertexSession.cart = { user_id:'', items:[], total:0, numItems: 0 }
+    
+    return req
+}
+
 module.exports = {
 
     shuffleArray:         shuffleArray,
@@ -174,7 +181,8 @@ module.exports = {
     isStasher:            isStasher,
     scheduleSelected:     scheduleSelected,
     selected:             selected,
-    randTicket:           randTicket
+    randTicket:           randTicket,
+    blankVertexSession:   blankVertexSession
 }
 
   

@@ -9,6 +9,9 @@ const moment      = MomentRange.extendMoment(Moment);
 const addListing   = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const listCats = constants.listCats
     const cities   = constants.cities
     const vertexSession = req.vertexSession
@@ -20,6 +23,9 @@ const addListingPost = (req, res) => {
     const user = req.vertexSession.user
     
     functions.isStasher(user, res)
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
 
     const name        = body.listingTitle
     const slug        = name.toLowerCase().split(" ").join("+") + "+" + functions.randomString(4)
@@ -117,6 +123,9 @@ const addListingPost = (req, res) => {
 const index = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     res.render('dashBoardPages/index', {vertexSession})
     return
@@ -124,6 +133,9 @@ const index = (req, res) => {
 
 const edit = (req, res) => {
     const slug = req.params.slug
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     turbo.fetch( collections.locations, { slug })
     .then(data => {
@@ -153,6 +165,9 @@ const update = (req, res) => {
     const user = req.vertexSession.user
 
     functions.isStasher(user, res)
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
 
     const name        = body.listingTitle
     const slug        = req.params.slug
@@ -220,6 +235,9 @@ const locationsList = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
     turbo.fetch( collections.locations, { owner_id: user.id } )
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     .then(data => {
         res.render('dashBoardPages/myList',{ locations: data, vertexSession })
@@ -246,6 +264,9 @@ const activeStashing = (req, res) => {
     }
 
     functions.isAuth( user, res )
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     
     turbo.fetch( collections.locations, { slug } )
@@ -331,6 +352,9 @@ const changeStatus = (req, res) => {
 const searchTicket = (req, res) => {
     const ticket = req.body.search.toUpperCase()
     const slug   = req.body.slug
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
     if(ticket.length == 0){ 
         res.redirect("/dashboard/active-stash-"+slug) 

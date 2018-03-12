@@ -9,6 +9,9 @@ const moment      = MomentRange.extendMoment(Moment);
 
 const show = (req, res) => {
     const location_slug = req.params.location_slug
+    if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+        req = functions.blankVertexSession(req) 
+    }
     const vertexSession = req.vertexSession
 
     turbo.fetch( collections.locations, { slug: location_slug } )
@@ -249,6 +252,9 @@ const list = (req, res) => {
             page = 0
         }else{
             page = parseInt( req.query.page ) - 1
+        }
+        if(  req.vertexSession == null || req.vertexSession.user == null ){ 
+            req = functions.blankVertexSession(req) 
         }
         const vertexSession = req.vertexSession
         const cities   = constants.cities
