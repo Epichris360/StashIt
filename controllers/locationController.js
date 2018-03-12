@@ -17,10 +17,10 @@ const show = (req, res) => {
     turbo.fetch( collections.locations, { slug: location_slug } )
     .then(data => {
         const description = data[0].description.split('\n')
-        const img         = JSON.parse( data[0].imgLink )
+        //const img         = JSON.parse( data[0].imgLink )
         const phoneBool   = ( data[0].phoneNum != ""  )
         const websiteBool = ( data[0].email    != "" )
-        res.render("locations/show",{ location: data[0], img: img, description: description, 
+        res.render("locations/show",{ location: data[0], description: description, 
             phoneBool: phoneBool, websiteBool: websiteBool, vertexSession })
         return
     })
@@ -243,10 +243,9 @@ const availability = (req, res) => {
 }
 
 const list = (req, res) => {
-    
+    let page
     turbo.fetch( collections.locations, null )
     .then(data => {
-        let page
         
         if( typeof req.query.page == "undefined" || parseInt( req.query.page ) == 1 ){
             page = 0
@@ -257,11 +256,10 @@ const list = (req, res) => {
             req = functions.blankVertexSession(req) 
         }
         const vertexSession = req.vertexSession
+        
         const cities   = constants.cities
         const listCats = constants.listCats
-        for( let x = 0; x < data.length; x++ ){
-            data[x].img = JSON.parse( data[x].imgLink )
-        }
+       
         let locations = null
         const city    = req.query.city
         const listCat = req.query.listCat
@@ -276,7 +274,7 @@ const list = (req, res) => {
         
         const pageData  = functions.paginationArrays(locations, 8)
         const pgLinks   = functions.pgLinks(pageData.length, page)
- 
+        
         res.render('locations/list', { locations: pageData[page], vertexSession,
             cities: cities, listCats: listCats, pgLinks: pgLinks, city:city, listCat: listCat })
         return
@@ -288,8 +286,40 @@ const list = (req, res) => {
     })
 }
 
+const createComment = (req, res) => {
+    const body = req.body
+    const review = {
+        location_id: body.location_id, review: body.review, email: body.email, name: body.name,
+        starForm: parseInt( body.star )
+    }
+    const starVal = functions.starVal( parseInt(body.star) )
+    const starScore = parseInt( body.oldStar ) + parseInt( starVal )
+
+    //update starscore for location then save comment
+
+    turbo.updateEntity( collections.locations, body.location_id, { starScore } )
+    .then(data => {
+        return
+    })
+    .then( () => {
+        turbo.create( collections.reviews, review )
+        .then(newReview => {
+            res.redirect('/')
+            return
+        })
+    })
+    .catch(err => {
+        res.status(200).json({
+            err: err.message
+        })
+        return
+    })
+
+}
+
 module.exports = {
-    show:         show,
-    availability: availability,
-    list:         list
+    show:          show,
+    availability:  availability,
+    list:          list,
+    createComment: createComment
 }

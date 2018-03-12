@@ -51,7 +51,7 @@
 				<div class="col-lg-4 col-md-6">
 					<a href="/location/show/{{slug}}" class="listing-item-container compact">
 						<div class="listing-item">
-							<img src="{{img}}" alt="">
+							<img src="{{imgLink}}" alt="">
 
 							<div class="listing-badge now-open">Now Open</div>
 
@@ -82,7 +82,7 @@
 						<nav class="pagination">
 							<ul>
 								<li><a class="{{pgLinks.backward.class}}" href="/location/list?city={{city}}&listCat={{listCat}}&page={{pgLinks.backward.num}}"><i class="sl sl-icon-arrow-left "></i></a></li>
-								<li><a class="{{pgLinks.forward.class}}" href="/location/list?city={{city}}&listCat={{listCat}}&page={{pgLinks.forward.num}}"><i class="sl sl-icon-arrow-right "></i></a></li>
+								<li><a class="{{pgLinks.forward.class}}" style="float: right;" href="/location/list?city={{city}}&listCat={{listCat}}&page={{pgLinks.forward.num}}"><i class="sl sl-icon-arrow-right "></i></a></li>
 							</ul>
 						</nav>
 					</div> 

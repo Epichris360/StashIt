@@ -167,6 +167,23 @@ const blankVertexSession = (req) => {
     return req
 }
 
+const starVal = (star) => {
+    /*1 star == 5, 2 star == 4, 3 star == 3, 4 star == 2, 5 star == 1*/
+    let result
+    if( star == 5 ){
+        result = 1
+    }else if( star == 4 ){
+        result = 2
+    }else if( star == 3 ){
+        result = 3
+    }else if( star == 2 ){
+        result = 4
+    }else if( star == 1 ){
+        result = 5
+    }
+    return result
+}
+
 module.exports = {
 
     shuffleArray:         shuffleArray,
@@ -182,7 +199,8 @@ module.exports = {
     scheduleSelected:     scheduleSelected,
     selected:             selected,
     randTicket:           randTicket,
-    blankVertexSession:   blankVertexSession
+    blankVertexSession:   blankVertexSession,
+    starVal:              starVal
 }
 
   

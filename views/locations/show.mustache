@@ -2,7 +2,7 @@
     <div id="wrapper">
 
         <!-- Slider ================================================== -->
-        <header class="header header-inverse bg-fixed" style="background-image: url( {{img}} )" data-overlay="8">
+        <header class="header header-inverse bg-fixed" style="background-image: url( {{location.imgLink}} )" data-overlay="8">
             <div class="container text-center">
 
                 <div class="row">
@@ -33,7 +33,7 @@
                                     {{location.address}}
                                 </a>
                             </span>
-                            <div class="star-rating" data-rating="5">
+                            <div class="star-rating" data-rating="4.5">
                                 <div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
                             </div>
                         </div>
@@ -108,7 +108,8 @@
 
                         <div class="clearfix"></div>
 
-                        <!-- Reviews -->
+                        <!-- loop Reviews/comments -->
+                        {{#comments}}
                         <section class="comments listing-reviews">
 
                             <ul>
@@ -116,16 +117,19 @@
                                 <li>
                                     <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
                                     <div class="comment-content"><div class="arrow-comment"></div>
-                                        <div class="comment-by">John Doe<span class="date">May 2017</span>
-                                            <div class="star-rating" data-rating="5"></div>
+                                        <div class="comment-by">{{name}}<span class="date">May 2017</span>
+                                            <div class="star-rating" data-rating="{{star}}"></div>
                                         </div>
-                                        <p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
+                                        <p>
+                                            {{review}}
+                                        </p>
                                         <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
                                     </div>
                                 </li>
 
                             </ul>
                         </section>
+                        {{/comments}}
 
                         <!-- Pagination -->
                         <div class="clearfix"></div>
@@ -162,54 +166,43 @@
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>
                                 <div class="leave-rating margin-bottom-30">
-                                    <input type="radio" name="rating" id="rating-1" value="1"/>
+                                    <input type="radio" class="star" name="rating" id="rating-1" value="1"/>
                                     <label for="rating-1" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-2" value="2"/>
+                                    <input type="radio" class="star" name="rating" id="rating-2" value="2"/>
                                     <label for="rating-2" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-3" value="3"/>
+                                    <input type="radio" class="star" name="rating" id="rating-3" value="3"/>
                                     <label for="rating-3" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-4" value="4"/>
+                                    <input type="radio" class="star" name="rating" id="rating-4" value="4"/>
                                     <label for="rating-4" class="fa fa-star"></label>
-                                    <input type="radio" name="rating" id="rating-5" value="5"/>
+                                    <input type="radio" class="star" name="rating" id="rating-5" value="5"/>
                                     <label for="rating-5" class="fa fa-star"></label>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
-                            <div class="col-md-6">
-                                <!-- Uplaod Photos -->
-                                <div class="add-review-photos margin-bottom-30">
-                                    <div class="photoUpload">
-                                        <span><i class="sl sl-icon-arrow-up-circle"></i> Upload Photos</span>
-                                        <input type="file" class="upload" />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
             
                         <!-- Review Comment -->
-                        <form id="add-comment" class="add-comment">
+                        <form id="add-comment" class="add-comment" action="/location/create-comment" method="POST">
                             <fieldset>
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Name:</label>
-                                        <input type="text" value=""/>
+                                        <input name="name" type="text" value="" required/>
                                     </div>
-                                        
                                     <div class="col-md-6">
                                         <label>Email:</label>
-                                        <input type="text" value=""/>
+                                        <input name="email" type="text" value="" required/>
                                     </div>
                                 </div>
-
                                 <div>
                                     <label>Review:</label>
-                                    <textarea cols="40" rows="3"></textarea>
+                                    <textarea name="review" cols="40" rows="3" required></textarea>
                                 </div>
 
+                                <input name="star" id="formStar" type="hidden" >
+                                <input name="oldStar" id="oldStar" type="hidden" value="{{location.starScore}}" >
+                                <input name="location_id" id="location_id" type="hidden" value="{{location.id}}" >
                             </fieldset>
-
                             <button class="button">Submit Review</button>
                             <div class="clearfix"></div>
                         </form>
@@ -472,6 +465,9 @@
                 $("#stripeLoading").removeClass('hidden')
             })
 
+            $(".star").on('click', function(e){
+                $("#formStar").val( $(this).val() )
+            })
         })
     </script>
 

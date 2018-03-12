@@ -9,9 +9,10 @@ const checkoutController = require('../controllers/checkoutController')
 	Data is rendered using the Mustache templating engine. For more
 	information, view here: https://mustache.github.io/#demo */
 
-router.get("/show/:location_slug", locationController.show 		   )
-router.post("/availability",   	   locationController.availability )
-router.post("/payment", 		   checkoutController.payment 	   )
-router.get("/list",				   locationController.list         )
+router.get("/show/:location_slug", locationController.show 		    )
+router.post("/availability",   	   locationController.availability  )
+router.post("/payment", 		   checkoutController.payment 	    )
+router.get("/list",				   locationController.list          )
+router.post("/create-comment",	   locationController.createComment )
 
 module.exports = router

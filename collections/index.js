@@ -11,5 +11,5 @@ module.exports = {
     capacities:  "capacities",
 
     user:        "user",
-    
+    reviews:     "reviews"
 }

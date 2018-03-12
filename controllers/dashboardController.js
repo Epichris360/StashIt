@@ -67,7 +67,8 @@ const addListingPost = (req, res) => {
     const location = {
         name: name, category: category, city: city, address: address, zipcode: zipcode, 
         description: description, phoneNum: phoneNum, website: website, email: email,
-        schedule: schedule, imgLink: imgLink, owner_id: user.id, capacity: capacity, slug: slug
+        schedule: schedule, imgLink: imgLink, owner_id: user.id, capacity: capacity, slug: slug,
+        starScore: 0
     }
 
     turbo.create( collections.locations, location )
