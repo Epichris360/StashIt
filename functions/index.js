@@ -1,6 +1,6 @@
 const moment = require('moment')
 const constants = require('../constants')
-constants.costFirstDay
+
 //ill only use this for the front page. this would make pagination hell
 const shuffleArray = ( arr ) => {
     const newArr = arr

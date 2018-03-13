@@ -16,13 +16,24 @@ const show = (req, res) => {
 
     turbo.fetch( collections.locations, { slug: location_slug } )
     .then(data => {
-        const description = data[0].description.split('\n')
-        //const img         = JSON.parse( data[0].imgLink )
-        const phoneBool   = ( data[0].phoneNum != ""  )
-        const websiteBool = ( data[0].email    != "" )
-        res.render("locations/show",{ location: data[0], description: description, 
-            phoneBool: phoneBool, websiteBool: websiteBool, vertexSession })
-        return
+        return data[0]
+    })
+    .then(location => {
+        turbo.fetch( collections.reviews, { location_id: location.id } )
+        .then(reviews => {
+            const description = location.description.split('\n')
+            //const img         = JSON.parse( data[0].imgLink )
+            const phoneBool   = ( location.phoneNum != ""  )
+            const websiteBool = ( location.email    != "" )
+            for( let x = 0; x < reviews.length; x++ ){
+                reviews[x].starVal = functions.starVal( parseInt(reviews[x].starForm) )
+            }
+            res.render("locations/show",{ location: location, description: description, 
+                phoneBool: phoneBool, websiteBool: websiteBool, vertexSession, reviews: reviews,
+                reviewsQty: reviews.length
+            })
+            return
+        })
     })
     .catch(err => {
         res.status(500).json({
@@ -295,8 +306,12 @@ const createComment = (req, res) => {
     const starVal = functions.starVal( parseInt(body.star) )
     const starScore = parseInt( body.oldStar ) + parseInt( starVal )
 
-    //update starscore for location then save comment
+    //getting the date
+    const month = constants.months[ new Date().getMonth() + 1 ].month
 
+    review.day = `${month}, ${new Date().getDate()} ${new Date().getFullYear()}`
+    //update starscore for location then save comment
+    
     turbo.updateEntity( collections.locations, body.location_id, { starScore } )
     .then(data => {
         return
@@ -304,7 +319,7 @@ const createComment = (req, res) => {
     .then( () => {
         turbo.create( collections.reviews, review )
         .then(newReview => {
-            res.redirect('/')
+            res.redirect('back')
             return
         })
     })
@@ -314,7 +329,6 @@ const createComment = (req, res) => {
         })
         return
     })
-
 }
 
 module.exports = {

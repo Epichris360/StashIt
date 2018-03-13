@@ -104,12 +104,12 @@
                         
                     <!-- Reviews -->
                     <div id="listing-reviews" class="listing-section">
-                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>(1)</span></h3>
+                        <h3 class="listing-desc-headline margin-top-75 margin-bottom-20">Reviews <span>({{reviewsQty}})</span></h3>
 
                         <div class="clearfix"></div>
 
                         <!-- loop Reviews/comments -->
-                        {{#comments}}
+                        {{#reviews}}
                         <section class="comments listing-reviews">
 
                             <ul>
@@ -117,25 +117,25 @@
                                 <li>
                                     <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
                                     <div class="comment-content"><div class="arrow-comment"></div>
-                                        <div class="comment-by">{{name}}<span class="date">May 2017</span>
-                                            <div class="star-rating" data-rating="{{star}}"></div>
+                                        <div class="comment-by">{{name}}<span class="date">{{day}}</span>
+                                            <div class="star-rating" data-rating="{{starVal}}"></div>
                                         </div>
                                         <p>
                                             {{review}}
                                         </p>
-                                        <a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
+                                        <!--<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>-->
                                     </div>
                                 </li>
 
                             </ul>
                         </section>
-                        {{/comments}}
+                        {{/reviews}}
 
                         <!-- Pagination -->
                         <div class="clearfix"></div>
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-md-12">
-                                <!-- Pagination -->
+                                Pagination 
                                 <div class="pagination-container margin-top-30">
                                     <nav class="pagination">
                                         <ul>
@@ -146,7 +146,7 @@
                                     </nav>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="clearfix"></div>
                         <!-- Pagination / End -->
                     </div>
