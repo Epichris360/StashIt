@@ -117,13 +117,21 @@
                                 <li>
                                     <div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
                                     <div class="comment-content"><div class="arrow-comment"></div>
-                                        <div class="comment-by">{{name}}<span class="date">{{day}}</span>
-                                            <div class="star-rating" data-rating="{{starVal}}"></div>
+                                        <div class="comment-by">
+                                            <span id="name-{{id}}" >{{name}}</span>
+                                            <span class="date" id="day-{{id}}" >{{day}}</span>
+                                            <div class="star-rating" id="star-{{id}}" data-rating="{{starVal}}"></div>
                                         </div>
-                                        <p>
+                                        <p id="review-{{id}}" >
                                             {{review}}
                                         </p>
-                                        <!--<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>-->
+                                        {{#canEdit}}
+                                            <a href="#review-edit-form" data-reviewID="{{id}}" 
+                                                class="btn btn-green edit-btn popup-with-zoom-anim"
+                                            >
+                                                Edit
+                                            </a>
+                                        {{/canEdit}}
                                     </div>
                                 </li>
 
@@ -156,12 +164,17 @@
                     <div id="add-review" class="add-review-box">
 
                         <!-- Add Review -->
+                        {{#vertexSession.user.loggedIn}}
                         <h3 class="listing-desc-headline margin-bottom-20">Add Review</h3>
                         
                         <span class="leave-rating-title">Your rating for this listing</span>
-                        
+                        {{/vertexSession.user.loggedIn}}
+                        {{#vertexSession.user.notloggedIn}}
+                            <h1>Please Log In to Submit a Comment</h1>
+                        {{/vertexSession.user.notloggedIn}}
                         <!-- Rating / Upload Button -->
                         <div class="row">
+                            {{#vertexSession.user.loggedIn}}
                             <div class="col-md-6">
                                 <!-- Leave Rating -->
                                 <div class="clearfix"></div>
@@ -179,8 +192,9 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                            {{/vertexSession.user.loggedIn}}
                         </div>
-            
+                        {{#vertexSession.user.loggedIn}}
                         <!-- Review Comment -->
                         <form id="add-comment" class="add-comment" action="/location/create-comment" method="POST">
                             <fieldset>
@@ -206,6 +220,8 @@
                             <button class="button">Submit Review</button>
                             <div class="clearfix"></div>
                         </form>
+                        {{/vertexSession.user.loggedIn}}
+                        
 
                     </div>
                     <!-- Add Review Box / End -->
@@ -371,6 +387,7 @@
                             </ul>
                             <div class="clearfix"></div>
                     </div>
+                    
 
                 </div>
                 <!-- Sidebar / End -->
@@ -467,6 +484,10 @@
 
             $(".star").on('click', function(e){
                 $("#formStar").val( $(this).val() )
+            })
+
+            $(".edit-btn").on('click', function(e){
+                console.log('hi')
             })
         })
     </script>

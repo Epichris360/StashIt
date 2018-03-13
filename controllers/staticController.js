@@ -7,7 +7,7 @@ const root = (req, res) => {
     turbo.fetch( collections.locations, null )
     .then(data => {
         if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-            req = functions.blankVertexSession(req) 
+            req.vertexSession = functions.blankVertexSession() 
         }
         const austin  = data.filter(d => d.city == constants.cities[3].name ).length
         const sanFran = data.filter(d => d.city == constants.cities[1].name ).length

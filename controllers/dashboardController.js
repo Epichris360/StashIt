@@ -10,7 +10,7 @@ const addListing   = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const listCats = constants.listCats
     const cities   = constants.cities
@@ -24,7 +24,7 @@ const addListingPost = (req, res) => {
     
     functions.isStasher(user, res)
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
 
     const name        = body.listingTitle
@@ -125,7 +125,7 @@ const index = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const vertexSession = req.vertexSession
     res.render('dashBoardPages/index', {vertexSession})
@@ -167,7 +167,7 @@ const update = (req, res) => {
 
     functions.isStasher(user, res)
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
 
     const name        = body.listingTitle
@@ -237,7 +237,7 @@ const locationsList = (req, res) => {
     functions.isStasher(user, res)
     turbo.fetch( collections.locations, { owner_id: user.id } )
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const vertexSession = req.vertexSession
     .then(data => {
@@ -266,7 +266,7 @@ const activeStashing = (req, res) => {
 
     functions.isAuth( user, res )
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const vertexSession = req.vertexSession
     
@@ -354,7 +354,7 @@ const searchTicket = (req, res) => {
     const ticket = req.body.search.toUpperCase()
     const slug   = req.body.slug
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const vertexSession = req.vertexSession
     if(ticket.length == 0){ 

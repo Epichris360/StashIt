@@ -1,0 +1,35 @@
+
+<div id="review-edit-form" class="zoom-anim-dialog mfp-hide">
+    <div class="sign-in-form style-1">
+        <div class="tabs-container alt">
+            <div class="tab-content" id="tab1" style="display: none;">
+                <form id="add-comment" class="add-comment" action="/location/create-comment" method="POST">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Name:</label>
+                                <input name="name" type="text" value="" required/>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Email:</label>
+                                <input name="email" type="text" value="" required/>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Review:</label>
+                            <textarea name="review" cols="40" rows="3" required></textarea>
+                        </div>
+
+                        <input name="star" id="formStar" type="hidden" >
+                        <input name="oldStar" id="oldStar" type="hidden" value="{{location.starScore}}" >
+                        <input name="location_id" id="location_id" type="hidden" value="{{location.id}}" >
+                    </fieldset>
+                    <button class="button">Submit Review</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

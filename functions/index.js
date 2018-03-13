@@ -159,12 +159,13 @@ const capitalizeFirstLetter = (string) => {
     return string[0].toUpperCase() + string.slice(1);
 }
 
-const blankVertexSession = (req) => {
-    req.vertexSession.user = { id: '', username: '', email:'', loggedIn: false, notloggedIn: true, canEdit:false, role:'' }
-    req.vertexSession.msg  = { show: false, text:'', type:'' }
-    req.vertexSession.cart = { user_id:'', items:[], total:0, numItems: 0 }
+const blankVertexSession = () => {
+    let vertexSession = {}
+    vertexSession.user = { id: '', username: '', email:'', loggedIn: false, notloggedIn: true, canEdit:false, role:'' }
+    vertexSession.msg  = { show: false, text:'', type:'' }
+    vertexSession.cart = { user_id:'', items:[], total:0, numItems: 0 }
     
-    return req
+    return vertexSession
 }
 
 const starVal = (star) => {
@@ -184,6 +185,14 @@ const starVal = (star) => {
     return result
 }
 
+const reviewEditPerUser = (reviews, user) => {
+    // figures out which comments can be edited by the current user
+    for(let x = 0; x < reviews.length; x++){
+        reviews[x].canEdit = reviews[x].user_id == user.id
+    }
+    return reviews
+}
+
 module.exports = {
 
     shuffleArray:         shuffleArray,
@@ -200,7 +209,8 @@ module.exports = {
     selected:             selected,
     randTicket:           randTicket,
     blankVertexSession:   blankVertexSession,
-    starVal:              starVal
+    starVal:              starVal,
+    reviewEditPerUser:    reviewEditPerUser
 }
 
   

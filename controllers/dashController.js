@@ -7,7 +7,7 @@ const index = (req, res) => {
     const user = req.vertexSession.user
     functions.isStasher(user, res)
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
     const vertexSession = req.vertexSession
     let page

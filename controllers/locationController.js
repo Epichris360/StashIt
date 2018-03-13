@@ -8,12 +8,13 @@ const MomentRange = require('moment-range');
 const moment      = MomentRange.extendMoment(Moment);
 
 const show = (req, res) => {
+    //  popup-with-zoom-anim  ::  class for popups
     const location_slug = req.params.location_slug
     if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-        req = functions.blankVertexSession(req) 
+        req.vertexSession = functions.blankVertexSession() 
     }
+    
     const vertexSession = req.vertexSession
-
     turbo.fetch( collections.locations, { slug: location_slug } )
     .then(data => {
         return data[0]
@@ -21,6 +22,8 @@ const show = (req, res) => {
     .then(location => {
         turbo.fetch( collections.reviews, { location_id: location.id } )
         .then(reviews => {
+            const user = vertexSession.user
+            const reviewEditPerUser = functions.reviewEditPerUser(reviews, user)
             const description = location.description.split('\n')
             //const img         = JSON.parse( data[0].imgLink )
             const phoneBool   = ( location.phoneNum != ""  )
@@ -29,8 +32,8 @@ const show = (req, res) => {
                 reviews[x].starVal = functions.starVal( parseInt(reviews[x].starForm) )
             }
             res.render("locations/show",{ location: location, description: description, 
-                phoneBool: phoneBool, websiteBool: websiteBool, vertexSession, reviews: reviews,
-                reviewsQty: reviews.length
+                phoneBool: phoneBool, websiteBool: websiteBool, vertexSession: vertexSession, 
+                reviews: reviewEditPerUser, reviewsQty: reviews.length, showReviewEditForm: vertexSession.user.loggedIn
             })
             return
         })
@@ -264,7 +267,7 @@ const list = (req, res) => {
             page = parseInt( req.query.page ) - 1
         }
         if(  req.vertexSession == null || req.vertexSession.user == null ){ 
-            req = functions.blankVertexSession(req) 
+            req.vertexSession = functions.blankVertexSession() 
         }
         const vertexSession = req.vertexSession
         
@@ -299,9 +302,10 @@ const list = (req, res) => {
 
 const createComment = (req, res) => {
     const body = req.body
+    const user = req.vertexSession.user
     const review = {
         location_id: body.location_id, review: body.review, email: body.email, name: body.name,
-        starForm: parseInt( body.star )
+        starForm: parseInt( body.star ), user_id: user.id
     }
     const starVal = functions.starVal( parseInt(body.star) )
     const starScore = parseInt( body.oldStar ) + parseInt( starVal )

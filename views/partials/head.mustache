@@ -85,7 +85,7 @@
 					{{/vertexSession.user.notloggedIn}}
 					
 					{{#vertexSession.user.loggedIn}}
-					<a href="/user/signout" class="sign-in" >Sign Out</a>
+						<a href="/user/signout" class="sign-in" >Sign Out</a>
 					{{/vertexSession.user.loggedIn}}
 					<a href="dashboard-add-listing.html" class="button border with-icon">Add Listing <i class="sl sl-icon-plus"></i></a>
 				</div>
@@ -214,6 +214,9 @@
 			</div>
 			<!-- Sign In Popup / End -->
 			{{/vertexSession.user.notloggedIn}}
+			{{#showReviewEditForm}}
+                {{>reviewEditForm}}
+        	{{/showReviewEditForm}}
 
 		</div>
 	</div>
